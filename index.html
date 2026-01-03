@@ -1,0 +1,1661 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menschenrechte und Arbeitsbedingungen - Online-Unterweisung</title>
+    <meta name="description" content="Online-Unterweisung zu Menschenrechten und Arbeitsbedingungen nach UN-Leitprinzipien und ILO-Kernkonventionen.">
+    
+    <!-- QM-Guru Akademie Styles (zentral) -->
+    <link rel="stylesheet" href="https://qm-guru-akademie.netlify.app/styles.css">
+    
+    <style>
+        /* ===== KURS-SPEZIFISCHE STYLES ===== */
+        
+        /* Kategorie-Farbe: Compliance/HR = Türkis */
+        :root {
+            --course-color: #319795;
+            --course-color-light: rgba(49, 151, 149, 0.1);
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: var(--color-bg);
+            border-bottom: 1px solid var(--color-border);
+            padding: 16px 24px;
+            position: sticky;
+            top: 73px;
+            z-index: 90;
+        }
+
+        .progress-inner {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .progress-text {
+            color: var(--color-text-light);
+        }
+
+        .progress-percent {
+            font-weight: 600;
+            color: var(--course-color);
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: var(--color-border);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--course-color), #4FD1C5);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        /* Hauptinhalt */
+        .course-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 32px 24px;
+        }
+
+        /* Module */
+        .module {
+            background: var(--color-bg);
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            margin-bottom: 24px;
+            overflow: hidden;
+            display: none;
+        }
+
+        .module.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .module-header {
+            background: linear-gradient(135deg, var(--course-color), #4FD1C5);
+            color: white;
+            padding: 24px;
+        }
+
+        .module-number {
+            font-size: 13px;
+            opacity: 0.9;
+            margin-bottom: 4px;
+        }
+
+        .module-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .module-content {
+            padding: 32px;
+        }
+
+        .module-content h3 {
+            color: var(--course-color);
+            font-size: 18px;
+            margin: 24px 0 12px;
+        }
+
+        .module-content h3:first-child {
+            margin-top: 0;
+        }
+
+        .module-content p {
+            margin-bottom: 16px;
+            line-height: 1.8;
+        }
+
+        .module-content ul {
+            margin: 16px 0;
+            padding-left: 24px;
+        }
+
+        .module-content li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        .highlight-box {
+            background: var(--course-color-light);
+            border-left: 4px solid var(--course-color);
+            padding: 16px 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 20px 0;
+        }
+
+        .highlight-box.warning {
+            background: rgba(237, 137, 54, 0.1);
+            border-left-color: #ED8936;
+        }
+
+        .highlight-box strong {
+            color: var(--course-color);
+        }
+
+        .highlight-box.warning strong {
+            color: #ED8936;
+        }
+
+        /* Navigation Buttons */
+        .module-nav {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 32px;
+            border-top: 1px solid var(--color-border);
+            background: var(--color-bg-alt);
+        }
+
+        .btn-nav {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+
+        .btn-prev {
+            background: var(--color-bg);
+            color: var(--color-text);
+            border: 1px solid var(--color-border);
+        }
+
+        .btn-prev:hover {
+            border-color: var(--course-color);
+            color: var(--course-color);
+        }
+
+        .btn-next {
+            background: var(--course-color);
+            color: white;
+        }
+
+        .btn-next:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .btn-nav:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Quiz Styles */
+        .quiz-container {
+            margin-top: 24px;
+        }
+
+        .quiz-question {
+            background: var(--color-bg-alt);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .quiz-question-text {
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 16px;
+            color: var(--color-text);
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .quiz-option {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 14px 16px;
+            background: var(--color-bg);
+            border: 2px solid var(--color-border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .quiz-option:hover {
+            border-color: var(--course-color);
+        }
+
+        .quiz-option.selected {
+            border-color: var(--course-color);
+            background: var(--course-color-light);
+        }
+
+        .quiz-option.correct {
+            border-color: #48BB78;
+            background: rgba(72, 187, 120, 0.1);
+        }
+
+        .quiz-option.incorrect {
+            border-color: #E53E3E;
+            background: rgba(229, 62, 62, 0.1);
+        }
+
+        .quiz-checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--color-border);
+            border-radius: 4px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2px;
+        }
+
+        .quiz-option.selected .quiz-checkbox {
+            background: var(--course-color);
+            border-color: var(--course-color);
+            color: white;
+        }
+
+        .quiz-option.correct .quiz-checkbox {
+            background: #48BB78;
+            border-color: #48BB78;
+        }
+
+        .quiz-option.incorrect .quiz-checkbox {
+            background: #E53E3E;
+            border-color: #E53E3E;
+        }
+
+        .quiz-option-text {
+            flex: 1;
+            line-height: 1.5;
+        }
+
+        /* Ergebnis */
+        .result-container {
+            text-align: center;
+            padding: 48px 32px;
+        }
+
+        .result-icon {
+            font-size: 64px;
+            margin-bottom: 24px;
+        }
+
+        .result-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .result-score {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--course-color);
+            margin: 24px 0;
+        }
+
+        .result-message {
+            color: var(--color-text-light);
+            font-size: 18px;
+            margin-bottom: 32px;
+        }
+
+        .result-actions {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Registrierungsformular */
+        .register-form {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--color-text);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--color-border);
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.2s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--course-color);
+        }
+
+        /* Inhaltsverzeichnis */
+        .toc {
+            background: var(--color-bg-alt);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 24px 0;
+        }
+
+        .toc h3 {
+            margin-bottom: 16px;
+            color: var(--color-text);
+        }
+
+        .toc-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .toc-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--color-border);
+            color: var(--color-text-light);
+            font-size: 14px;
+        }
+
+        .toc-item:last-child {
+            border-bottom: none;
+        }
+
+        .toc-number {
+            width: 28px;
+            height: 28px;
+            background: var(--course-color-light);
+            color: var(--course-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 13px;
+            flex-shrink: 0;
+        }
+
+        /* Icons Liste */
+        .icon-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .icon-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 8px 0;
+        }
+
+        .icon-list li::before {
+            content: '✓';
+            color: var(--course-color);
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .module-content {
+                padding: 24px 20px;
+            }
+
+            .module-nav {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .btn-nav {
+                width: 100%;
+                text-align: center;
+            }
+
+            .result-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOP-BAR -->
+    <header class="top-bar">
+        <div class="top-bar-inner">
+            <a href="https://qm-guru.de" class="logo">
+                <div class="logo-icon">QM</div>
+                <div class="logo-text">
+                    <span class="logo-name">QM-Guru</span>
+                    <span class="logo-sub">Online Akademie</span>
+                </div>
+            </a>
+            <div class="top-bar-links">
+                <a href="https://qm-guru-akademie.netlify.app" class="btn btn-secondary">← Zur Akademie</a>
+                <a href="https://onlinecert.info" class="btn btn-cta">🏆 onlinecert.info</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- FORTSCHRITTSANZEIGE -->
+    <div class="progress-container">
+        <div class="progress-inner">
+            <div class="progress-header">
+                <span class="progress-text">Modul <span id="currentModule">1</span> von <span id="totalModules">16</span></span>
+                <span class="progress-percent"><span id="progressPercent">0</span>%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- KURS-INHALT -->
+    <main class="course-container">
+
+        <!-- ==================== MODUL 0: REGISTRIERUNG ==================== -->
+        <section class="module active" id="module-0">
+            <div class="module-header">
+                <div class="module-number">Willkommen</div>
+                <h1 class="module-title">Online-Unterweisung: Menschenrechte und Arbeitsbedingungen</h1>
+            </div>
+            <div class="module-content">
+                <p>Diese Unterweisung vermittelt Ihnen wichtige Kenntnisse über Menschenrechte und faire Arbeitsbedingungen im Unternehmen. Die Inhalte basieren auf:</p>
+                
+                <ul class="icon-list">
+                    <li>UN-Leitprinzipien für Wirtschaft und Menschenrechte</li>
+                    <li>ILO-Kernkonventionen (Internationale Arbeitsorganisation)</li>
+                    <li>Lieferkettensorgfaltspflichtengesetz (LkSG)</li>
+                </ul>
+
+                <div class="toc">
+                    <h3>📋 Schulungsinhalte</h3>
+                    <ul class="toc-list">
+                        <li class="toc-item"><span class="toc-number">1</span> Einleitung</li>
+                        <li class="toc-item"><span class="toc-number">2</span> Ethische Rekrutierung</li>
+                        <li class="toc-item"><span class="toc-number">3</span> Nichtdiskriminierung und Belästigung</li>
+                        <li class="toc-item"><span class="toc-number">4</span> Frauenrechte</li>
+                        <li class="toc-item"><span class="toc-number">5</span> Vielfalt, Gerechtigkeit und Inklusion</li>
+                        <li class="toc-item"><span class="toc-number">6</span> Rechte von Minderheiten</li>
+                        <li class="toc-item"><span class="toc-number">7</span> Land-, Wald- und Wasserrechte</li>
+                        <li class="toc-item"><span class="toc-number">8</span> Verbot von Zwangsarbeit</li>
+                        <li class="toc-item"><span class="toc-number">9</span> Kinderarbeit</li>
+                        <li class="toc-item"><span class="toc-number">10</span> Löhne und Sozialleistungen</li>
+                        <li class="toc-item"><span class="toc-number">11</span> Arbeitszeit</li>
+                        <li class="toc-item"><span class="toc-number">12</span> Moderne Sklaverei</li>
+                        <li class="toc-item"><span class="toc-number">13</span> Vereinigungsfreiheit</li>
+                        <li class="toc-item"><span class="toc-number">14</span> Sicherheitskräfte</li>
+                        <li class="toc-item"><span class="toc-number">🎯</span> Abschlusstest (14 Fragen)</li>
+                    </ul>
+                </div>
+
+                <div class="highlight-box">
+                    <strong>⏱️ Dauer:</strong> ca. 30-45 Minuten<br>
+                    <strong>🏆 Zertifikat:</strong> Bei Bestehen des Abschlusstests (mind. 70%)
+                </div>
+
+                <h3>Ihre Daten für das Zertifikat</h3>
+                <form class="register-form" id="registerForm">
+                    <div class="form-group">
+                        <label class="form-label" for="firstName">Vorname *</label>
+                        <input type="text" class="form-input" id="firstName" required placeholder="Ihr Vorname">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="lastName">Nachname *</label>
+                        <input type="text" class="form-input" id="lastName" required placeholder="Ihr Nachname">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="email">E-Mail-Adresse *</label>
+                        <input type="email" class="form-input" id="email" required placeholder="ihre.email@beispiel.de">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="company">Unternehmen (optional)</label>
+                        <input type="text" class="form-input" id="company" placeholder="Name Ihres Unternehmens">
+                    </div>
+                </form>
+            </div>
+            <div class="module-nav">
+                <div></div>
+                <button class="btn-nav btn-next" onclick="startCourse()">Schulung starten →</button>
+            </div>
+        </section>
+
+        <!-- ==================== MODUL 1: EINLEITUNG ==================== -->
+        <section class="module" id="module-1">
+            <div class="module-header">
+                <div class="module-number">Modul 1 von 14</div>
+                <h1 class="module-title">Einleitung</h1>
+            </div>
+            <div class="module-content">
+                <p>Unser Unternehmen verpflichtet sich, die <strong>Menschenrechte zu respektieren</strong> und sicherzustellen, dass alle Arbeitsbedingungen im Einklang mit internationalen Standards stehen.</p>
+
+                <h3>Grundlagen unserer Verpflichtung</h3>
+                <p>Diese Richtlinie basiert auf:</p>
+                <ul>
+                    <li><strong>UN-Leitprinzipien für Wirtschaft und Menschenrechte</strong> – Der internationale Standard für unternehmerische Verantwortung</li>
+                    <li><strong>ILO-Kernkonventionen</strong> – Die acht fundamentalen Übereinkommen der Internationalen Arbeitsorganisation</li>
+                    <li><strong>Lieferkettensorgfaltspflichtengesetz (LkSG)</strong> – Deutsche gesetzliche Anforderungen seit 2023</li>
+                </ul>
+
+                <h3>Geltungsbereich</h3>
+                <p>Diese Richtlinie gilt für:</p>
+                <ul>
+                    <li>Alle Aspekte unserer Geschäftstätigkeit</li>
+                    <li>Die Zusammenarbeit mit Partnern und Lieferanten</li>
+                    <li>Auftragnehmer, die für uns Dienstleistungen erbringen</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <strong>💡 Wichtig:</strong> Jeder Mitarbeiter trägt Verantwortung für die Einhaltung dieser Grundsätze – im eigenen Verhalten und im Umgang mit anderen.
+                </div>
+            </div>
+            <div class="module-nav">
+                <button class="btn-nav btn-prev" onclick="prevModule()">← Zurück</button>
+                <button class="btn-nav btn-next" onclick="nextModule()">Weiter →</button>
+            </div>
+        </section>
+
+        <!-- ==================== MODUL 2: ETHISCHE REKRUTIERUNG ==================== -->
+        <section class="module" id="module-2">
+            <div class="module-header">
+                <div class="module-number">Modul 2 von 14</div>
+                <h1 class="module-title">Ethische Rekrutierung</h1>
+            </div>
+            <div class="module-content">
+                <p>Wir setzen auf ein <strong>ethisches Rekrutierungsverfahren</strong>, das Transparenz, Fairness und Respekt gegenüber allen Bewerbern sicherstellt.</p>
+
+                <h3>Grundsätze der ethischen Rekrutierung</h3>
+                <ul>
+                    <li><strong>Transparenz:</strong> Offene Kommunikation über Anforderungen, Vergütung und Arbeitsbedingungen</li>
+                    <li><strong>Fairness:</strong> Gleiche Chancen für alle qualifizierten Bewerber</li>
+                    <li><strong>Respekt:</strong> Wertschätzender Umgang während des gesamten Bewerbungsprozesses</li>
+                </ul>
+
+                <h3>Was ist verboten?</h3>
+                <div class="highlight-box warning">
+                    <strong>⚠️ Nicht erlaubt:</strong>
+                    <ul style="margin-top: 8px; margin-bottom: 0;">
+                        <li>Diskriminierung basierend auf Geschlecht, Herkunft, Religion, Behinderung oder anderen geschützten Merkmalen</li>
+                        <li>Zwang oder ausbeuterische Praktiken bei der Rekrutierung</li>
+                        <li>Täuschung über Arbeitsbedingungen oder Vergütung</li>
+                        <li>Einbehaltung von Ausweispapieren oder Dokumenten</li>
+                    </ul>
+                </div>
+
+                <h3>Ihre Verantwortung</h3>
+                <p>Wenn Sie an Einstellungsprozessen beteiligt sind, achten Sie auf:</p>
+                <ul class="icon-list">
+                    <li>Objektive Bewertungskriterien</li>
+                    <li>Dokumentation von Entscheidungen</li>
+                    <li>Vertraulicher Umgang mit Bewerberdaten</li>
+                </ul>
+            </div>
+            <div class="module-nav">
+                <button class="btn-nav btn-prev" onclick="prevModule()">← Zurück</button>
+                <button class="btn-nav btn-next" onclick="nextModule()">Weiter →</button>
+            </div>
+        </section>
+
+        <!-- ==================== MODUL 3: NICHTDISKRIMINIERUNG ==================== -->
+        <section class="module" id="module-3">
+            <div class="module-header">
+                <div class="module-number">Modul 3 von 14</div>
+                <h1 class="module-title">Nichtdiskriminierung und Belästigung</h1>
+            </div>
+            <div class="module-content">
+                <p>Unser Unternehmen <strong>toleriert keinerlei Form von Diskriminierung oder Belästigung</strong>. Dies gilt für alle Bereiche:</p>
+                <ul>
+                    <li>Interne Arbeitsverhältnisse</li>
+                    <li>Zusammenarbeit mit externen Partnern</li>
+                    <li>Umgang mit Kunden und Lieferanten</li>
+                </ul>
+
+                <h3>Was ist Diskriminierung?</h3>
+                <p>Diskriminierung liegt vor, wenn Menschen wegen bestimmter Merkmale benachteiligt werden:</p>
+                <ul>
+                    <li>Geschlecht oder Geschlechtsidentität</li>
+                    <li>Sexuelle Orientierung</li>
+                    <li>Ethnische Herkunft oder Nationalität</li>
+                    <li>Religion oder Weltanschauung</li>
+                    <li>Behinderung</li>
+                    <li>Alter</li>
+                </ul>
+
+                <h3>Was ist Belästigung?</h3>
+                <p>Belästigung umfasst jedes unerwünschte Verhalten, das die Würde einer Person verletzt:</p>
+                <ul>
+                    <li>Verbale Belästigung (Beleidigungen, abwertende Kommentare)</li>
+                    <li>Nonverbale Belästigung (Gesten, Blicke)</li>
+                    <li>Physische Belästigung</li>
+                    <li>Sexuelle Belästigung</li>
+                    <li>Mobbing und Ausgrenzung</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <strong>🚨 Was tun bei Vorfällen?</strong><br>
+                    Melden Sie Diskriminierung oder Belästigung umgehend an Ihren Vorgesetzten, die Personalabteilung oder über das interne Hinweisgebersystem.
+                </div>
+            </div>
+            <div class="module-nav">
+                <button class="btn-nav btn-prev" onclick="prevModule()">← Zurück</button>
+                <button class="btn-nav btn-next" onclick="nextModule()">Weiter →</button>
+            </div>
+        </section>
+
+        <!-- ==================== MODUL 4: FRAUENRECHTE ==================== -->
+        <section class="module" id="module-4">
+            <div class="module-header">
+                <div class="module-number">Modul 4 von 14</div>
+                <h1 class="module-title">Frauenrechte</h1>
+            </div>
+            <div class="module-content">
+                <p>Die <strong>Rechte der Frauen</strong> werden in unserer Organisation voll und ganz respektiert. Wir fördern eine faire und gleichberechtigte Arbeitsumgebung.</p>
+
+                <h3>Unsere Verpflichtungen</h3>
+                <ul class="icon-list">
+                    <li><strong>Gleiche berufliche Chancen</strong> wie für Männer</li>
+                    <li><strong>Gleiche Bezahlung</strong> für gleiche Arbeit</li>
+                    <li><strong>Förderung von Frauen</strong> in Führungspositionen</li>
+                    <li><strong>Schutz vor Benachteiligung</strong> bei Schwangerschaft und Mutterschaft</li>
+                    <li><strong>Vereinbarkeit</strong> von Familie und Beruf</li>
+                </ul>
+
+                <h3>Entgeltgleichheit</h3>
+                <p>Das Entgelttransparenzgesetz gibt Mitarbeitern das Recht, Auskunft über die Vergütungsstrukturen zu erhalten. Wir verpflichten uns zu:</p>
+                <ul>
+                    <li>Transparenten Gehaltsstrukturen</li>
+                    <li>Regelmäßiger Überprüfung auf geschlechtsspezifische Lohnunterschiede</li>
+                    <li>Maßnahmen zum Abbau von Ungleichheiten</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <strong>📊 Wussten Sie?</strong><br>
+                    In Deutschland beträgt der bereinigte Gender Pay Gap immer noch etwa 6%. Unser Ziel ist es, diese Lücke vollständig zu schließen.
+                </div>
+            </div>
+            <div class="module-nav">
+                <button class="btn-nav btn-prev" onclick="prevModule()">← Zurück</button>
+                <button class="btn-nav btn-next" onclick="nextModule()">Weiter →</button>
+            </div>
+        </section>
+
+        <!-- ==================== MODUL 5: VIELFALT & INKLUSION ==================== -->
+        <section class="module" id="module-5">
+            <div class="module-header">
+                <div class="module-number">Modul 5 von 14</div>
+                <h1 class="module-title">Vielfalt, Gerechtigkeit und Inklusion</h1>
+            </div>
+            <div class="module-content">
+                <p>Wir sind bestrebt, eine <strong>vielfältige und inklusive Arbeitsumgebung</strong> zu schaffen, in der alle Mitarbeiter die gleichen Chancen haben.</p>
+
+                <h3>Was bedeutet Vielfalt (Diversity)?</h3>
+                <p>Vielfalt bedeutet die Anerkennung und Wertschätzung von Unterschieden:</p>
+                <ul>
+                    <li>Herkunft und kultureller Hintergrund</li>
+                    <li>Geschlecht und Geschlechtsidentität</li>
+                    <li>Alter und Generationen</li>
+                    <li>Fähigkeiten und Einschränkungen</li>
+                    <li>Ausbildung und Erfahrung</li>
+                    <li>Denkweisen und Perspektiven</li>
+                </ul>
+
+                <h3>Was bedeutet Inklusion?</h3>
+                <p>Inklusion geht über Vielfalt hinaus – sie bedeutet, dass sich <strong>alle Menschen zugehörig und wertgeschätzt fühlen</strong>:</p>
+                <ul class="icon-list">
+                    <li>Aktive Einbeziehung aller Stimmen</li>
+                    <li>Barrierefreie Arbeitsumgebung</li>
+                    <li>Respektvoller Umgang mit unterschiedlichen Meinungen</li>
+                    <li>Förderung von Zusammenarbeit</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <strong>💡 Vorteile von Diversity:</strong><br>
+                    Studien zeigen, dass diverse Teams kreativer, innovativer und erfolgreicher sind. Vielfalt ist kein Selbstzweck, sondern ein echter Wettbewerbsvorteil.
+                </div>
+            </div>
+            <div class="module-nav">
+                <button class="btn-nav btn-prev" onclick="prevModule()">← Zurück</button>
+                <button class="btn-nav btn-next" onclick="nextModule()">Weiter →</button>
+            </div>
+        </section>
+
+        <!-- ==================== MODUL 6: RECHTE VON MINDERHEITEN ==================== -->
+        <section class="module" id="module-6">
+            <div class="module-header">
+                <div class="module-number">Modul 6 von 14</div>
+                <h1 class="module-title">Rechte von Minderheiten und indigenen Völkern</h1>
+            </div>
+            <div class="module-content">
+                <p>Unser Unternehmen <strong>respektiert die Rechte von Minderheiten und indigenen Völkern</strong> und stellt sicher, dass diese in keiner Weise diskriminiert oder benachteiligt werden.</p>
+
+                <h3>Wer sind Minderheiten?</h3>
+                <p>Als Minderheiten gelten Gruppen, die sich durch bestimmte Merkmale von der Mehrheitsbevölkerung unterscheiden:</p>
+                <ul>
+                    <li>Ethnische und nationale Minderheiten</li>
+                    <li>Religiöse Minderheiten</li>
+                    <li>Sprachliche Minderheiten</li>
+                    <li>Indigene Völker und Gemeinschaften</li>
+                </ul>
+
+                <h3>Unsere Verpflichtungen</h3>
+                <ul class="icon-list">
+                    <li>Keine Diskriminierung aufgrund der Zugehörigkeit zu einer Minderheit</li>
+                    <li>Respekt für kulturelle Praktiken und Traditionen</li>
+                    <li>Schutz vor Benachteiligung in der Lieferkette</li>
+                    <li>Zusammenarbeit nur mit Partnern, die diese Rechte ebenfalls achten</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <strong>🌍 Globale Verantwortung:</strong><br>
+                    Besonders in internationalen Lieferketten ist es wichtig, auf die Rechte indigener Völker zu achten – etwa bei Rohstoffgewinnung oder Landnutzung.
+                </div>
+            </div>
+            <div class="module-nav">
+                <button class="btn-nav btn-prev" onclick="prevModule()">← Zurück</button>
+                <button class="btn-nav btn-next" onclick="nextModule()">Weiter →</button>
+            </div>
+        </section>
+
+        <!-- ==================== MODUL 7: LAND-, WALD- UND WASSERRECHTE ==================== -->
+        <section class="module" id="module-7">
+            <div class="module-header">
+                <div class="module-number">Modul 7 von 14</div>
+                <h1 class="module-title">Land-, Wald- und Wasserrechte</h1>
+            </div>
+            <div class="module-content">
+                <p>Wir erkennen die <strong>Rechte von Gemeinschaften und Völkern</strong> an, die über Land-, Wald- und Wasserressourcen verfügen.</p>
+
+                <h3>Warum ist das wichtig?</h3>
+                <p>In vielen Teilen der Welt sind natürliche Ressourcen eng mit dem Leben und der Kultur lokaler Gemeinschaften verbunden. Unternehmerische Aktivitäten können:</p>
+                <ul>
+                    <li>Lebensgrundlagen zerstören</li>
+                    <li>Traditionelle Nutzungsrechte verletzen</li>
+                    <li>Umweltzerstörung verursachen</li>
+                    <li>Konflikte auslösen</li>
+                </ul>
+
+                <h3>Unsere Grundsätze</h3>
+                <ul class="icon-list">
+                    <li>Respekt für lokale Gesetze und kulturelle Praktiken</li>
+                    <li>Keine Landnahme ohne freie, vorherige und informierte Zustimmung (FPIC)</li>
+                    <li>Schutz von Wasserressourcen</li>
+                    <li>Nachhaltige Nutzung natürlicher Ressourcen</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <strong>🔍 Sorgfaltspflicht:</strong><br>
+                    Bei der Auswahl von Lieferanten und Partnern prüfen wir, ob diese die Land- und Ressourcenrechte lokaler Gemeinschaften respektieren.
+                </div>
+            </div>
+            <div class="module-nav">
+                <button class="btn-nav btn-prev" onclick="prevModule()">← Zurück</button>
+                <button class="btn-nav btn-next" onclick="nextModule()">Weiter →</button>
+            </div>
+        </section>
+
+        <!-- ==================== MODUL 8: VERBOT VON ZWANGSARBEIT ==================== -->
+        <section class="module" id="module-8">
+            <div class="module-header">
+                <div class="module-number">Modul 8 von 14</div>
+                <h1 class="module-title">Verbot von Zwangsarbeit</h1>
+            </div>
+            <div class="module-content">
+                <p>Unser Unternehmen verpflichtet sich, dass in <strong>keiner Phase der Geschäftstätigkeit Zwangsarbeit</strong> oder ausbeuterische Praktiken vorkommen.</p>
+
+                <h3>Was ist Zwangsarbeit?</h3>
+                <p>Zwangsarbeit liegt vor, wenn Menschen zu einer Arbeit gezwungen werden, die sie nicht freiwillig ausführen. Anzeichen sind:</p>
+                <ul>
+                    <li><strong>Einbehaltung von Dokumenten</strong> (Pass, Ausweis)</li>
+                    <li><strong>Schuldfallen</strong> durch Vorschüsse oder Kredite</li>
+                    <li><strong>Bewegungseinschränkung</strong> durch Drohungen oder physische Gewalt</li>
+                    <li><strong>Einbehaltung von Löhnen</strong></li>
+                    <li><strong>Drohungen</strong> gegen Arbeitnehmer oder deren Familien</li>
+                    <li><strong>Täuschung</strong> über Arbeitsbedingungen</li>
+                </ul>
+
+                <div class="highlight-box warning">
+                    <strong>⚠️ Null-Toleranz:</strong><br>
+                    Jede Form von Zwangsarbeit – auch bei Lieferanten und Auftragnehmern – ist inakzeptabel und führt zu sofortigen Konsequenzen.
+                </div>
+
+                <h3>Ihre Verantwortung</h3>
+                <p>Achten Sie bei Geschäftsreisen oder in der Zusammenarbeit mit Partnern auf Warnsignale und melden Sie Verdachtsfälle umgehend.</p>
+            </div>
+            <div class="module-nav">
+                <button class="btn-nav btn-prev" onclick="prevModule()">← Zurück</button>
+                <button class="btn-nav btn-next" onclick="nextModule()">Weiter →</button>
+            </div>
+        </section>
+
+        <!-- ==================== MODUL 9: KINDERARBEIT ==================== -->
+        <section class="module" id="module-9">
+            <div class="module-header">
+                <div class="module-number">Modul 9 von 14</div>
+                <h1 class="module-title">Kinderarbeit und junge Arbeitnehmer</h1>
+            </div>
+            <div class="module-content">
+                <p>Unser Unternehmen verpflichtet sich, <strong>keinerlei Form von Kinderarbeit zu dulden</strong> und junge Arbeitnehmer besonders zu schützen.</p>
+
+                <h3>Definition Kinderarbeit</h3>
+                <p>Nach internationalen Standards (ILO-Konvention 138) gilt:</p>
+                <ul>
+                    <li><strong>Mindestalter:</strong> In der Regel 15 Jahre (oder Abschluss der Schulpflicht)</li>
+                    <li><strong>Leichte Arbeit:</strong> Ab 13 Jahren unter bestimmten Bedingungen erlaubt</li>
+                    <li><strong>Gefährliche Arbeit:</strong> Erst ab 18 Jahren</li>
+                </ul>
+
+                <h3>Schutz junger Arbeitnehmer</h3>
+                <p>Für Arbeitnehmer unter 18 Jahren gelten besondere Schutzvorschriften:</p>
+                <ul class="icon-list">
+                    <li>Keine gefährlichen oder gesundheitsschädlichen Tätigkeiten</li>
+                    <li>Begrenzte Arbeitszeiten</li>
+                    <li>Keine Nachtarbeit</li>
+                    <li>Angemessene Pausen und Erholungszeiten</li>
+                </ul>
+
+                <div class="highlight-box warning">
+                    <strong>⚠️ In Lieferketten:</strong><br>
+                    Kinderarbeit ist besonders in globalen Lieferketten ein Risiko – etwa in der Landwirtschaft, Textilproduktion oder im Bergbau. Wir prüfen unsere Lieferanten regelmäßig.
+                </div>
+            </div>
+            <div class="module-nav">
+                <button class="btn-nav btn-prev" onclick="prevModule()">← Zurück</button>
+                <button class="btn-nav btn-next" onclick="nextModule()">Weiter →</button>
+            </div>
+        </section>
+
+        <!-- ==================== MODUL 10: LÖHNE UND SOZIALLEISTUNGEN ==================== -->
+        <section class="module" id="module-10">
+            <div class="module-header">
+                <div class="module-number">Modul 10 von 14</div>
+                <h1 class="module-title">Löhne und Sozialleistungen</h1>
+            </div>
+            <div class="module-content">
+                <p>Wir gewährleisten, dass alle Mitarbeiter <strong>faire Löhne</strong> erhalten, die den gesetzlichen Bestimmungen und Branchenstandards entsprechen.</p>
+
+                <h3>Unsere Zusagen</h3>
+                <ul class="icon-list">
+                    <li><strong>Mindestlohn:</strong> Einhaltung des gesetzlichen Mindestlohns als Untergrenze</li>
+                    <li><strong>Existenzsichernde Löhne:</strong> Anstreben von Löhnen, die über das Minimum hinausgehen</li>
+                    <li><strong>Pünktliche Zahlung:</strong> Regelmäßige und vollständige Lohnzahlung</li>
+                    <li><strong>Transparenz:</strong> Klare Gehaltsabrechnungen</li>
+                </ul>
+
+                <h3>Sozialleistungen</h3>
+                <p>Alle erforderlichen Sozialleistungen werden gewährt:</p>
+                <ul>
+                    <li>Krankenversicherung</li>
+                    <li>Rentenversicherung / Altersvorsorge</li>
+                    <li>Arbeitslosenversicherung</li>
+                    <li>Bezahlter Urlaub</li>
+                    <li>Lohnfortzahlung im Krankheitsfall</li>
+                    <li>Mutterschutz und Elternzeit</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <strong>💰 Fair Wages:</strong><br>
+                    Ein existenzsichernder Lohn muss Grundbedürfnisse wie Nahrung, Wohnung, Kleidung, Bildung und Gesundheitsversorgung sowie ein angemessenes Einkommen für unvorhergesehene Ereignisse decken.
+                </div>
+            </div>
+            <div class="module-nav">
+                <button class="btn-nav btn-prev" onclick="prevModule()">← Zurück</button>
+                <button class="btn-nav btn-next" onclick="nextModule()">Weiter →</button>
+            </div>
+        </section>
+
+        <!-- ==================== MODUL 11: ARBEITSZEIT ==================== -->
+        <section class="module" id="module-11">
+            <div class="module-header">
+                <div class="module-number">Modul 11 von 14</div>
+                <h1 class="module-title">Arbeitszeit</h1>
+            </div>
+            <div class="module-content">
+                <p>Die Arbeitszeiten werden in Übereinstimmung mit den <strong>nationalen und internationalen Arbeitszeitgesetzen</strong> geregelt.</p>
+
+                <h3>Grundsätze</h3>
+                <ul class="icon-list">
+                    <li><strong>Maximale Arbeitszeit:</strong> In der Regel 48 Stunden pro Woche (nach ILO)</li>
+                    <li><strong>Ruhezeiten:</strong> Mindestens 11 Stunden zwischen Arbeitstagen</li>
+                    <li><strong>Pausen:</strong> Regelmäßige Pausen während der Arbeitszeit</li>
+                    <li><strong>Wochenruhe:</strong> Mindestens ein freier Tag pro Woche</li>
+                </ul>
+
+                <h3>Überstunden</h3>
+                <p>Für Überstunden gelten klare Regeln:</p>
+                <ul>
+                    <li><strong>Freiwilligkeit:</strong> Überstunden nur auf freiwilliger Basis</li>
+                    <li><strong>Vergütung:</strong> Faire Bezahlung oder Freizeitausgleich</li>
+                    <li><strong>Begrenzung:</strong> Keine übermäßigen Überstunden</li>
+                    <li><strong>Keine Pflicht:</strong> Ablehnung ohne negative Konsequenzen möglich</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <strong>⚖️ Work-Life-Balance:</strong><br>
+                    Angemessene Arbeitszeiten sind nicht nur gesetzlich vorgeschrieben, sondern tragen auch zur Gesundheit, Motivation und Produktivität der Mitarbeiter bei.
+                </div>
+            </div>
+            <div class="module-nav">
+                <button class="btn-nav btn-prev" onclick="prevModule()">← Zurück</button>
+                <button class="btn-nav btn-next" onclick="nextModule()">Weiter →</button>
+            </div>
+        </section>
+
+        <!-- ==================== MODUL 12: MODERNE SKLAVEREI ==================== -->
+        <section class="module" id="module-12">
+            <div class="module-header">
+                <div class="module-number">Modul 12 von 14</div>
+                <h1 class="module-title">Moderne Sklaverei</h1>
+            </div>
+            <div class="module-content">
+                <p>Unser Unternehmen duldet <strong>keine Form von moderner Sklaverei</strong>. Wir setzen uns aktiv für deren Bekämpfung ein.</p>
+
+                <h3>Was ist moderne Sklaverei?</h3>
+                <p>Moderne Sklaverei umfasst verschiedene Formen der Ausbeutung:</p>
+                <ul>
+                    <li><strong>Zwangsarbeit:</strong> Arbeit unter Androhung von Strafe</li>
+                    <li><strong>Menschenhandel:</strong> Rekrutierung, Transport oder Beherbergung von Menschen zum Zweck der Ausbeutung</li>
+                    <li><strong>Schuldknechtschaft:</strong> Arbeit zur Tilgung einer Schuld unter ausbeuterischen Bedingungen</li>
+                    <li><strong>Leibeigenschaft:</strong> Extreme wirtschaftliche Abhängigkeit</li>
+                    <li><strong>Zwangsheirat:</strong> Ehe ohne freie Zustimmung</li>
+                </ul>
+
+                <h3>Anzeichen erkennen</h3>
+                <ul>
+                    <li>Personen wirken ängstlich, eingeschüchtert oder unterwürfig</li>
+                    <li>Zeichen von körperlicher Misshandlung</li>
+                    <li>Keine Kontrolle über eigene Dokumente</li>
+                    <li>Ungewöhnliche Arbeits- oder Wohnverhältnisse</li>
+                    <li>Extreme Arbeitsstunden ohne angemessene Bezahlung</li>
+                </ul>
+
+                <div class="highlight-box warning">
+                    <strong>🚨 Verdacht melden!</strong><br>
+                    Wenn Sie Anzeichen moderner Sklaverei bemerken – bei Lieferanten, Partnern oder anderswo – melden Sie dies umgehend. Jede Meldung wird vertraulich behandelt.
+                </div>
+            </div>
+            <div class="module-nav">
+                <button class="btn-nav btn-prev" onclick="prevModule()">← Zurück</button>
+                <button class="btn-nav btn-next" onclick="nextModule()">Weiter →</button>
+            </div>
+        </section>
+
+        <!-- ==================== MODUL 13: VEREINIGUNGSFREIHEIT ==================== -->
+        <section class="module" id="module-13">
+            <div class="module-header">
+                <div class="module-number">Modul 13 von 14</div>
+                <h1 class="module-title">Vereinigungsfreiheit und Tarifverhandlungen</h1>
+            </div>
+            <div class="module-content">
+                <p>Mitarbeiter haben das Recht, sich zu <strong>organisieren und ihre Interessen zu vertreten</strong>.</p>
+
+                <h3>Ihre Rechte</h3>
+                <ul class="icon-list">
+                    <li><strong>Gewerkschaftsmitgliedschaft:</strong> Freiheit, einer Gewerkschaft beizutreten oder nicht</li>
+                    <li><strong>Betriebsrat:</strong> Recht auf Mitbestimmung durch gewählte Vertreter</li>
+                    <li><strong>Tarifverhandlungen:</strong> Kollektive Verhandlung von Arbeitsbedingungen</li>
+                    <li><strong>Versammlungsfreiheit:</strong> Recht, sich mit Kollegen zu treffen und auszutauschen</li>
+                </ul>
+
+                <h3>Schutz vor Benachteiligung</h3>
+                <p>Niemand darf wegen der Ausübung dieser Rechte benachteiligt werden:</p>
+                <ul>
+                    <li>Keine Kündigung wegen Gewerkschaftszugehörigkeit</li>
+                    <li>Keine Behinderung der Betriebsratsarbeit</li>
+                    <li>Kein Druck gegen Organisierung</li>
+                    <li>Respektvoller Dialog mit Arbeitnehmervertretern</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <strong>🤝 Sozialpartnerschaft:</strong><br>
+                    Ein konstruktiver Dialog zwischen Arbeitgebern und Arbeitnehmervertretern trägt zu fairen Arbeitsbedingungen und einem guten Betriebsklima bei.
+                </div>
+            </div>
+            <div class="module-nav">
+                <button class="btn-nav btn-prev" onclick="prevModule()">← Zurück</button>
+                <button class="btn-nav btn-next" onclick="nextModule()">Weiter →</button>
+            </div>
+        </section>
+
+        <!-- ==================== MODUL 14: SICHERHEITSKRÄFTE ==================== -->
+        <section class="module" id="module-14">
+            <div class="module-header">
+                <div class="module-number">Modul 14 von 14</div>
+                <h1 class="module-title">Einsatz von Sicherheitskräften</h1>
+            </div>
+            <div class="module-content">
+                <p>Falls private oder öffentliche Sicherheitskräfte eingesetzt werden, stellen wir sicher, dass deren Einsatz <strong>ethischen Standards entspricht</strong>.</p>
+
+                <h3>Grundsätze für den Einsatz von Sicherheitskräften</h3>
+                <ul class="icon-list">
+                    <li><strong>Verhältnismäßigkeit:</strong> Angemessener Einsatz von Gewalt nur als letztes Mittel</li>
+                    <li><strong>Menschenrechte:</strong> Keine Verletzung von Grundrechten</li>
+                    <li><strong>Schulung:</strong> Sicherheitspersonal muss in Menschenrechten geschult sein</li>
+                    <li><strong>Aufsicht:</strong> Klare Berichts- und Kontrollmechanismen</li>
+                </ul>
+
+                <h3>Risiken vermeiden</h3>
+                <p>Bei der Zusammenarbeit mit Sicherheitsdiensten achten wir auf:</p>
+                <ul>
+                    <li>Sorgfältige Auswahl von Sicherheitsdienstleistern</li>
+                    <li>Vertragliche Verpflichtung zur Einhaltung von Menschenrechten</li>
+                    <li>Regelmäßige Überprüfung der Sicherheitspraktiken</li>
+                    <li>Transparente Dokumentation von Vorfällen</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <strong>📋 UN-Grundsätze:</strong><br>
+                    Die "Freiwilligen Grundsätze für Sicherheit und Menschenrechte" bieten einen Rahmen für den verantwortungsvollen Einsatz von Sicherheitskräften.
+                </div>
+
+                <h3>Geschafft! 🎉</h3>
+                <p>Sie haben alle Lernmodule abgeschlossen. Klicken Sie auf "Weiter", um zum Abschlusstest zu gelangen.</p>
+            </div>
+            <div class="module-nav">
+                <button class="btn-nav btn-prev" onclick="prevModule()">← Zurück</button>
+                <button class="btn-nav btn-next" onclick="nextModule()">Zum Abschlusstest →</button>
+            </div>
+        </section>
+
+        <!-- ==================== MODUL 15: ABSCHLUSSTEST ==================== -->
+        <section class="module" id="module-15">
+            <div class="module-header">
+                <div class="module-number">Abschlusstest</div>
+                <h1 class="module-title">Testen Sie Ihr Wissen</h1>
+            </div>
+            <div class="module-content">
+                <p>Beantworten Sie die folgenden 14 Fragen. Um das Zertifikat zu erhalten, müssen Sie mindestens <strong>70% (10 von 14 Fragen)</strong> richtig beantworten.</p>
+
+                <div class="quiz-container" id="quizContainer">
+                    
+                    <!-- Frage 1 -->
+                    <div class="quiz-question" data-question="1">
+                        <div class="quiz-question-text">1. Ethische Rekrutierung: Welche Aussage trifft zu?</div>
+                        <div class="quiz-options">
+                            <div class="quiz-option" data-correct="false" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Bewerber dürfen aufgrund ihrer Herkunft bevorzugt oder benachteiligt werden.</div>
+                            </div>
+                            <div class="quiz-option" data-correct="false" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Rekrutierungsprozesse dürfen nur für bestimmte Personengruppen offen sein.</div>
+                            </div>
+                            <div class="quiz-option" data-correct="true" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Rekrutierung erfolgt fair, transparent und ohne Zwang oder ausbeuterische Praktiken.</div>
+                            </div>
+                            <div class="quiz-option" data-correct="false" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Das Rekrutierungsverfahren bevorzugt ausschließlich männliche Bewerber.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Frage 2 -->
+                    <div class="quiz-question" data-question="2">
+                        <div class="quiz-question-text">2. Nichtdiskriminierung: Was ist hinsichtlich Diskriminierung und Belästigung verboten?</div>
+                        <div class="quiz-options">
+                            <div class="quiz-option" data-correct="false" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Diskriminierung ist akzeptabel, solange sie nicht öffentlich ist.</div>
+                            </div>
+                            <div class="quiz-option" data-correct="false" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Diskriminierung ist nur in internen Arbeitsverhältnissen verboten.</div>
+                            </div>
+                            <div class="quiz-option" data-correct="true" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Diskriminierung und Belästigung sind in jeglicher Form und in allen Bereichen strikt verboten.</div>
+                            </div>
+                            <div class="quiz-option" data-correct="false" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Belästigung ist nur bei größeren Unternehmen verboten.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Frage 3 -->
+                    <div class="quiz-question" data-question="3">
+                        <div class="quiz-question-text">3. Frauenrechte: Was wird gefördert?</div>
+                        <div class="quiz-options">
+                            <div class="quiz-option" data-correct="false" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Frauen erhalten keine gleichen beruflichen Chancen wie Männer.</div>
+                            </div>
+                            <div class="quiz-option" data-correct="true" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Frauenrechte werden respektiert und gleiche Bezahlung für gleiche Arbeit wird gefördert.</div>
+                            </div>
+                            <div class="quiz-option" data-correct="false" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Frauen werden in Führungspositionen bevorzugt, aber nicht auf gleiche Weise wie Männer.</div>
+                            </div>
+                            <div class="quiz-option" data-correct="false" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Frauen werden bei anspruchsvollen Aufgaben ausgeschlossen.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Frage 4 -->
+                    <div class="quiz-question" data-question="4">
+                        <div class="quiz-question-text">4. Vielfalt und Inklusion: Welche Aussage beschreibt die Haltung korrekt?</div>
+                        <div class="quiz-options">
+                            <div class="quiz-option" data-correct="false" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Vielfalt und Inklusion sind optional und werden nicht aktiv gefördert.</div>
+                            </div>
+                            <div class="quiz-option" data-correct="true" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Alle Mitarbeiter haben die gleichen Chancen, unabhängig von Herkunft, Geschlecht oder anderen Merkmalen.</div>
+                            </div>
+                            <div class="quiz-option" data-correct="false" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Es wird nur eine Gruppe von Mitarbeitern gefördert.</div>
+                            </div>
+                            <div class="quiz-option" data-correct="false" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Inklusion ist nur für interne Mitarbeiter wichtig, nicht für Partner.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Frage 5 -->
+                    <div class="quiz-question" data-question="5">
+                        <div class="quiz-question-text">5. Minderheitenrechte: Wie werden die Rechte von Minderheiten respektiert?</div>
+                        <div class="quiz-options">
+                            <div class="quiz-option" data-correct="false" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Minderheitenrechte werden in keiner Weise berücksichtigt.</div>
+                            </div>
+                            <div class="quiz-option" data-correct="true" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Die Rechte von Minderheiten und indigenen Völkern werden respektiert, und Diskriminierung ist unzulässig.</div>
+                            </div>
+                            <div class="quiz-option" data-correct="false" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Rechte von Minderheiten werden nur berücksichtigt, wenn es gesetzlich vorgeschrieben ist.</div>
+                            </div>
+                            <div class="quiz-option" data-correct="false" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Die Firma diskriminiert Minderheiten, wenn diese gegen Unternehmensziele verstoßen.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Frage 6 -->
+                    <div class="quiz-question" data-question="6">
+                        <div class="quiz-question-text">6. Land-, Wald- und Wasserrechte: Wie wird damit umgegangen?</div>
+                        <div class="quiz-options">
+                            <div class="quiz-option" data-correct="false" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Diese Rechte werden ignoriert, wenn sie den Geschäftszielen entgegenstehen.</div>
+                            </div>
+                            <div class="quiz-option" data-correct="true" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Land-, Wald- und Wasserrechte werden respektiert und die Firma engagiert sich für deren Wahrung.</div>
+                            </div>
+                            <div class="quiz-option" data-correct="false" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Diese Rechte sind irrelevant, solange die gesetzlichen Vorschriften eingehalten werden.</div>
+                            </div>
+                            <div class="quiz-option" data-correct="false" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Land- und Wasserrechte sind kein relevantes Thema.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Frage 7 -->
+                    <div class="quiz-question" data-question="7">
+                        <div class="quiz-question-text">7. Zwangsarbeit: Welche Haltung ist korrekt?</div>
+                        <div class="quiz-options">
+                            <div class="quiz-option" data-correct="false" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Zwangsarbeit ist in bestimmten Fällen akzeptabel.</div>
+                            </div>
+                            <div class="quiz-option" data-correct="false" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Zwangsarbeit wird bei externen Auftragnehmern akzeptiert.</div>
+                            </div>
+                            <div class="quiz-option" data-correct="true" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Zwangsarbeit ist zu jeder Zeit verboten, und es wird dafür gesorgt, dass keine ausbeuterischen Praktiken vorkommen.</div>
+                            </div>
+                            <div class="quiz-option" data-correct="false" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Zwangsarbeit wird akzeptiert, wenn es die Geschäftseffizienz steigert.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Frage 8 -->
+                    <div class="quiz-question" data-question="8">
+                        <div class="quiz-question-text">8. Menschenrechte in der Lieferkette: Wie wird die Einhaltung sichergestellt?</div>
+                        <div class="quiz-options">
+                            <div class="quiz-option" data-correct="false" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Menschenrechte sind nur intern relevant, die Lieferkette ist nicht betroffen.</div>
+                            </div>
+                            <div class="quiz-option" data-correct="true" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Die Firma prüft regelmäßig, ob alle Partner und Auftragnehmer die Menschenrechte einhalten.</div>
+                            </div>
+                            <div class="quiz-option" data-correct="false" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Lieferanten können Menschenrechte vernachlässigen, solange dies nicht öffentlich wird.</div>
+                            </div>
+                            <div class="quiz-option" data-correct="false" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Die Firma kümmert sich nur um Menschenrechte, wenn gesetzliche Vorschriften dies erfordern.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Frage 9 -->
+                    <div class="quiz-question" data-question="9">
+                        <div class="quiz-question-text">9. Kinderarbeit: Welche Aussage trifft zu?</div>
+                        <div class="quiz-options">
+                            <div class="quiz-option" data-correct="false" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Kinderarbeit ist in einigen Ländern akzeptabel, solange sie gesetzlich erlaubt ist.</div>
+                            </div>
+                            <div class="quiz-option" data-correct="true" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Es wird keine Form von Kinderarbeit oder Ausbeutung junger Arbeitnehmer toleriert.</div>
+                            </div>
+                            <div class="quiz-option" data-correct="false" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Junge Arbeitnehmer dürfen in gefährlichen Bereichen arbeiten, wenn sie zustimmen.</div>
+                            </div>
+                            <div class="quiz-option" data-correct="false" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Kinderarbeit wird nur in Notsituationen toleriert.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Frage 10 -->
+                    <div class="quiz-question" data-question="10">
+                        <div class="quiz-question-text">10. Löhne und Sozialleistungen: Welche Beschreibung ist korrekt?</div>
+                        <div class="quiz-options">
+                            <div class="quiz-option" data-correct="false" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Es wird nur der gesetzliche Mindestlohn gezahlt, ohne Sozialleistungen.</div>
+                            </div>
+                            <div class="quiz-option" data-correct="true" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Mitarbeiter erhalten faire Löhne und alle erforderlichen Sozialleistungen, die den gesetzlichen Bestimmungen entsprechen.</div>
+                            </div>
+                            <div class="quiz-option" data-correct="false" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Mitarbeiter müssen auf Sozialleistungen verzichten, wenn sie Überstunden leisten.</div>
+                            </div>
+                            <div class="quiz-option" data-correct="false" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Sozialleistungen werden nur auf ausdrückliche Anfrage gewährt.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Frage 11 -->
+                    <div class="quiz-question" data-question="11">
+                        <div class="quiz-question-text">11. Arbeitszeit: Was ist die Einstellung bezüglich Arbeitszeiten?</div>
+                        <div class="quiz-options">
+                            <div class="quiz-option" data-correct="false" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Überstunden sind obligatorisch und werden nicht extra vergütet.</div>
+                            </div>
+                            <div class="quiz-option" data-correct="true" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Arbeitszeiten werden in Übereinstimmung mit den nationalen und internationalen Arbeitszeitgesetzen geregelt.</div>
+                            </div>
+                            <div class="quiz-option" data-correct="false" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Mitarbeiter entscheiden selbst ohne Regeln über ihre Arbeitszeiten.</div>
+                            </div>
+                            <div class="quiz-option" data-correct="false" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Alle Mitarbeiter müssen mehr als die gesetzliche Arbeitszeit leisten.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Frage 12 -->
+                    <div class="quiz-question" data-question="12">
+                        <div class="quiz-question-text">12. Moderne Sklaverei: Welche Haltung ist korrekt?</div>
+                        <div class="quiz-options">
+                            <div class="quiz-option" data-correct="false" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Moderne Sklaverei wird toleriert, wenn es wirtschaftlich vorteilhaft ist.</div>
+                            </div>
+                            <div class="quiz-option" data-correct="true" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Sklaverei und Zwangsarbeit sind in allen Phasen der Lieferkette strikt verboten.</div>
+                            </div>
+                            <div class="quiz-option" data-correct="false" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Es gibt keine Verantwortung für Zwangsarbeit in der Lieferkette.</div>
+                            </div>
+                            <div class="quiz-option" data-correct="false" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Sklaverei wird in Ausnahmefällen akzeptiert.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Frage 13 -->
+                    <div class="quiz-question" data-question="13">
+                        <div class="quiz-question-text">13. Vereinigungsfreiheit: Wie wird damit umgegangen?</div>
+                        <div class="quiz-options">
+                            <div class="quiz-option" data-correct="false" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Mitarbeiter dürfen sich nicht organisieren oder Tarifverhandlungen führen.</div>
+                            </div>
+                            <div class="quiz-option" data-correct="true" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Das Recht auf Vereinigungsfreiheit wird anerkannt und Tarifverhandlungen werden gefördert.</div>
+                            </div>
+                            <div class="quiz-option" data-correct="false" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Tarifverhandlungen werden nur in Ausnahmefällen zugelassen.</div>
+                            </div>
+                            <div class="quiz-option" data-correct="false" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Vereinigungsfreiheit wird nur für Führungskräfte akzeptiert.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Frage 14 -->
+                    <div class="quiz-question" data-question="14">
+                        <div class="quiz-question-text">14. Sicherheitskräfte: Wie wird mit deren Einsatz umgegangen?</div>
+                        <div class="quiz-options">
+                            <div class="quiz-option" data-correct="false" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Der Einsatz wird ignoriert, solange keine Vorfälle passieren.</div>
+                            </div>
+                            <div class="quiz-option" data-correct="false" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Private Sicherheitskräfte dürfen ohne Einschränkungen eingesetzt werden.</div>
+                            </div>
+                            <div class="quiz-option" data-correct="true" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Es wird sichergestellt, dass der Einsatz von Sicherheitskräften ethischen Standards entspricht und keine Menschenrechte verletzt werden.</div>
+                            </div>
+                            <div class="quiz-option" data-correct="false" onclick="selectOption(this)">
+                                <div class="quiz-checkbox"></div>
+                                <div class="quiz-option-text">Sicherheitskräfte werden nur eingesetzt, wenn gesetzlich vorgeschrieben.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="module-nav">
+                <button class="btn-nav btn-prev" onclick="prevModule()">← Zurück</button>
+                <button class="btn-nav btn-next" onclick="submitQuiz()">Test auswerten →</button>
+            </div>
+        </section>
+
+        <!-- ==================== MODUL 16: ERGEBNIS ==================== -->
+        <section class="module" id="module-16">
+            <div class="module-header">
+                <div class="module-number">Ergebnis</div>
+                <h1 class="module-title">Ihr Testergebnis</h1>
+            </div>
+            <div class="module-content">
+                <div class="result-container" id="resultContainer">
+                    <!-- Wird per JavaScript gefüllt -->
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-bottom" style="border-top: none; padding-top: 0;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div class="logo-icon" style="width: 40px; height: 40px; font-size: 14px;">QM</div>
+                    <div>
+                        <strong>QM-Guru Online Akademie</strong><br>
+                        <span style="font-size: 13px; opacity: 0.8;">30+ Jahre Erfahrung · 1.000+ Projekte</span>
+                    </div>
+                </div>
+                <div class="footer-legal">
+                    © 2025 QM-Dienstleistungen
+                    <a href="#">Impressum</a>
+                    <a href="#">Datenschutz</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // Konfiguration
+        const TOTAL_MODULES = 16;
+        const PASSING_SCORE = 10; // 10 von 14 = ~70%
+        const TOTAL_QUESTIONS = 14;
+
+        // State
+        let currentModule = 0;
+        let userData = {};
+        let quizAnswers = {};
+
+        // Fortschritt aktualisieren
+        function updateProgress() {
+            const percent = Math.round((currentModule / (TOTAL_MODULES - 1)) * 100);
+            document.getElementById('currentModule').textContent = Math.min(currentModule, TOTAL_MODULES - 1);
+            document.getElementById('progressPercent').textContent = percent;
+            document.getElementById('progressFill').style.width = percent + '%';
+        }
+
+        // Modul anzeigen
+        function showModule(index) {
+            document.querySelectorAll('.module').forEach(m => m.classList.remove('active'));
+            document.getElementById('module-' + index).classList.add('active');
+            currentModule = index;
+            updateProgress();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Kurs starten
+        function startCourse() {
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+            const email = document.getElementById('email').value.trim();
+
+            if (!firstName || !lastName || !email) {
+                alert('Bitte füllen Sie alle Pflichtfelder aus.');
+                return;
+            }
+
+            if (!email.includes('@')) {
+                alert('Bitte geben Sie eine gültige E-Mail-Adresse ein.');
+                return;
+            }
+
+            userData = {
+                firstName,
+                lastName,
+                email,
+                company: document.getElementById('company').value.trim(),
+                startTime: new Date()
+            };
+
+            showModule(1);
+        }
+
+        // Navigation
+        function nextModule() {
+            if (currentModule < TOTAL_MODULES - 1) {
+                showModule(currentModule + 1);
+            }
+        }
+
+        function prevModule() {
+            if (currentModule > 0) {
+                showModule(currentModule - 1);
+            }
+        }
+
+        // Quiz-Antwort auswählen
+        function selectOption(element) {
+            const question = element.closest('.quiz-question');
+            const questionNum = question.dataset.question;
+            
+            // Vorherige Auswahl entfernen
+            question.querySelectorAll('.quiz-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            // Neue Auswahl markieren
+            element.classList.add('selected');
+            element.querySelector('.quiz-checkbox').innerHTML = '✓';
+            
+            // Antwort speichern
+            quizAnswers[questionNum] = element.dataset.correct === 'true';
+        }
+
+        // Quiz auswerten
+        function submitQuiz() {
+            // Prüfen ob alle Fragen beantwortet wurden
+            if (Object.keys(quizAnswers).length < TOTAL_QUESTIONS) {
+                alert('Bitte beantworten Sie alle Fragen.');
+                return;
+            }
+
+            // Antworten auswerten
+            let correctCount = 0;
+            for (let key in quizAnswers) {
+                if (quizAnswers[key]) correctCount++;
+            }
+
+            // Richtige/Falsche Antworten anzeigen
+            document.querySelectorAll('.quiz-question').forEach(question => {
+                const questionNum = question.dataset.question;
+                question.querySelectorAll('.quiz-option').forEach(opt => {
+                    if (opt.dataset.correct === 'true') {
+                        opt.classList.add('correct');
+                        opt.querySelector('.quiz-checkbox').innerHTML = '✓';
+                    } else if (opt.classList.contains('selected')) {
+                        opt.classList.add('incorrect');
+                        opt.querySelector('.quiz-checkbox').innerHTML = '✗';
+                    }
+                });
+            });
+
+            // Ergebnis anzeigen
+            const passed = correctCount >= PASSING_SCORE;
+            const percent = Math.round((correctCount / TOTAL_QUESTIONS) * 100);
+
+            const resultHTML = passed ? `
+                <div class="result-icon">🎉</div>
+                <h2 class="result-title" style="color: #48BB78;">Herzlichen Glückwunsch!</h2>
+                <div class="result-score">${correctCount} / ${TOTAL_QUESTIONS}</div>
+                <p class="result-message">
+                    Sie haben ${percent}% der Fragen richtig beantwortet und die Unterweisung erfolgreich bestanden!
+                </p>
+                <div class="result-actions">
+                    <button class="btn-nav btn-next" onclick="downloadCertificate()">🏆 Zertifikat herunterladen</button>
+                    <a href="https://qm-guru-akademie.netlify.app" class="btn-nav btn-prev">Weitere Schulungen</a>
+                </div>
+            ` : `
+                <div class="result-icon">😔</div>
+                <h2 class="result-title" style="color: #E53E3E;">Leider nicht bestanden</h2>
+                <div class="result-score" style="color: #E53E3E;">${correctCount} / ${TOTAL_QUESTIONS}</div>
+                <p class="result-message">
+                    Sie haben ${percent}% der Fragen richtig beantwortet. Zum Bestehen sind mindestens 70% (${PASSING_SCORE} richtige Antworten) erforderlich.
+                </p>
+                <div class="result-actions">
+                    <button class="btn-nav btn-next" onclick="retryQuiz()">🔄 Erneut versuchen</button>
+                    <button class="btn-nav btn-prev" onclick="showModule(1)">📖 Schulung wiederholen</button>
+                </div>
+            `;
+
+            document.getElementById('resultContainer').innerHTML = resultHTML;
+            showModule(16);
+
+            // Daten speichern (für Zertifikat)
+            userData.score = correctCount;
+            userData.total = TOTAL_QUESTIONS;
+            userData.percent = percent;
+            userData.passed = passed;
+            userData.completedAt = new Date();
+        }
+
+        // Quiz erneut versuchen
+        function retryQuiz() {
+            quizAnswers = {};
+            document.querySelectorAll('.quiz-option').forEach(opt => {
+                opt.classList.remove('selected', 'correct', 'incorrect');
+                opt.querySelector('.quiz-checkbox').innerHTML = '';
+            });
+            showModule(15);
+        }
+
+        // Zertifikat herunterladen (Platzhalter)
+        function downloadCertificate() {
+            const certData = {
+                name: userData.firstName + ' ' + userData.lastName,
+                email: userData.email,
+                company: userData.company,
+                course: 'Menschenrechte und Arbeitsbedingungen',
+                date: userData.completedAt.toLocaleDateString('de-DE'),
+                score: userData.score,
+                total: userData.total,
+                percent: userData.percent
+            };
+
+            // Hier könnte eine PDF-Generierung oder API-Aufruf stehen
+            alert('Zertifikat wird generiert für:\n\n' + 
+                  certData.name + '\n' +
+                  'Kurs: ' + certData.course + '\n' +
+                  'Datum: ' + certData.date + '\n' +
+                  'Ergebnis: ' + certData.score + '/' + certData.total + ' (' + certData.percent + '%)\n\n' +
+                  'Das Zertifikat wird Ihnen per E-Mail zugesendet.');
+        }
+
+        // Initial
+        document.getElementById('totalModules').textContent = TOTAL_MODULES - 2; // Ohne Registrierung und Ergebnis
+        updateProgress();
+    </script>
+
+</body>
+</html>
