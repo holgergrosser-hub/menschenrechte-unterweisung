@@ -1630,26 +1630,63 @@
             showModule(15);
         }
 
-        // Zertifikat herunterladen (Platzhalter)
+        // Zertifikat per Google Apps Script versenden
+        const WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbxMvGEfU8eNZLxaiT-CrNmQZCz_QDHLmb2Mo1D4ch1Uq51OXlGjzaw_1x8P_Ho0Cs5dPg/exec';
+
         function downloadCertificate() {
+            const btn = document.querySelector('.result-actions .btn-next');
+            const originalText = btn.textContent;
+            btn.textContent = '⏳ Wird versendet...';
+            btn.disabled = true;
+
             const certData = {
                 name: userData.firstName + ' ' + userData.lastName,
                 email: userData.email,
-                company: userData.company,
-                course: 'Menschenrechte und Arbeitsbedingungen',
-                date: userData.completedAt.toLocaleDateString('de-DE'),
+                company: userData.company || '',
                 score: userData.score,
-                total: userData.total,
-                percent: userData.percent
+                totalQuestions: userData.total,
+                percentage: userData.percent,
+                answers: Object.values(quizAnswers),
+                timestamp: new Date().toISOString()
             };
 
-            // Hier könnte eine PDF-Generierung oder API-Aufruf stehen
-            alert('Zertifikat wird generiert für:\n\n' + 
-                  certData.name + '\n' +
-                  'Kurs: ' + certData.course + '\n' +
-                  'Datum: ' + certData.date + '\n' +
-                  'Ergebnis: ' + certData.score + '/' + certData.total + ' (' + certData.percent + '%)\n\n' +
-                  'Das Zertifikat wird Ihnen per E-Mail zugesendet.');
+            fetch(WEBAPP_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(certData)
+            })
+            .then(() => {
+                // no-cors gibt keine Response, daher immer Erfolg annehmen
+                btn.textContent = '✅ Versendet!';
+                btn.style.background = '#48BB78';
+                
+                // Erfolgsmeldung anzeigen
+                const resultContainer = document.getElementById('resultContainer');
+                const successMsg = document.createElement('div');
+                successMsg.innerHTML = `
+                    <div style="background: #d4edda; border: 1px solid #c3e6cb; padding: 16px; border-radius: 8px; margin-top: 20px;">
+                        <p style="margin: 0; color: #155724;">
+                            <strong>📧 Zertifikat versendet!</strong><br>
+                            Eine E-Mail mit Ihrem Zertifikat wurde an <strong>${certData.email}</strong> gesendet.
+                        </p>
+                    </div>
+                `;
+                resultContainer.appendChild(successMsg);
+            })
+            .catch(error => {
+                console.error('Fehler:', error);
+                btn.textContent = '❌ Fehler - Erneut versuchen';
+                btn.style.background = '#E53E3E';
+                btn.disabled = false;
+                
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = '';
+                }, 3000);
+            });
         }
 
         // Initial
